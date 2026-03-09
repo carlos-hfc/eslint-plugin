@@ -1,4 +1,4 @@
-# @ch-faustino/eslint-plugin
+# @carlos-hfc/eslint-plugin
 
 ESLint plugin with configurations for React and Node.js projects.
 
@@ -9,7 +9,7 @@ ESLint plugin with configurations for React and Node.js projects.
 Install dependencies:
 
 ```bash
-npm i -D eslint @ch-faustino/eslint-plugin
+npm i -D eslint @carlos-hfc/eslint-plugin
 ```
 
 Create eslint file:
@@ -21,7 +21,7 @@ touch eslint.config.js
 Add to `eslint.config.js`:
 
 ```js
-import plugin from "@ch-faustino/eslint-plugin"
+import plugin from "@carlos-hfc/eslint-plugin"
 
 export default plugin.configs.react
 ```
@@ -31,7 +31,7 @@ export default plugin.configs.react
 Install dependencies:
 
 ```bash
-npm i -D eslint @ch-faustino/eslint-plugin
+npm i -D eslint @carlos-hfc/eslint-plugin
 ```
 
 Create eslint file:
@@ -43,7 +43,15 @@ touch eslint.config.js
 Add to `eslint.config.js`:
 
 ```js
-import plugin from "@ch-faustino/eslint-plugin"
+import plugin from "@carlos-hfc/eslint-plugin"
 
 export default plugin.configs.node
 ```
+
+## License
+
+MIT
+
+## Repository
+
+[GitHub](https://github.com/carlos-hfc/eslint-plugin)
