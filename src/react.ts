@@ -13,6 +13,29 @@ import simpleImportSort from "eslint-plugin-simple-import-sort"
 import unusedImports from "eslint-plugin-unused-imports"
 import globals from "globals"
 
+// Ensure a plugin object doesn't have malformed rule entries before fixing up
+function sanitizePlugin(plugin: any) {
+  if (!plugin || typeof plugin !== "object") {
+    return plugin;
+  }
+
+  if (plugin.rules && typeof plugin.rules === "object") {
+    const cleanRules = Object.fromEntries(
+      Object.entries(plugin.rules).filter(([, rule]) => {
+        if (!rule) return false;
+        // rule can be a factory function or an object with create
+        return (
+          typeof rule === "function" ||
+          (typeof rule.create === "function")
+        );
+      }),
+    );
+    return { ...plugin, rules: cleanRules };
+  }
+
+  return plugin;
+}
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const compat = new FlatCompat({
@@ -50,7 +73,7 @@ export default defineConfig([
     ),
 
     plugins: {
-      react: fixupPluginRules(react),
+      react: fixupPluginRules(sanitizePlugin(react)),
       "jsx-a11y": jsxA11Y,
       // @ts-ignore
       "@typescript-eslint": fixupPluginRules(typescriptEslint),
@@ -71,6 +94,7 @@ export default defineConfig([
         },
       ],
 
+      "react/display-name": "off",
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
 
