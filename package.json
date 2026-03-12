@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@carlos-hfc/eslint-plugin",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": false,
   "description": "ESLint plugin with configurations for React and Node.js projects.",
   "main": "dist/index.js",
