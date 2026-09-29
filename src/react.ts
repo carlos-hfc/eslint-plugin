@@ -1,28 +1,19 @@
-import path from "node:path"
-import { fileURLToPath } from "node:url"
-
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat"
-import { FlatCompat } from "@eslint/eslintrc"
-import js from "@eslint/js"
+import { fixupPluginRules } from "@eslint/compat"
 import typescriptEslint from "@typescript-eslint/eslint-plugin"
 import tsParser from "@typescript-eslint/parser"
 import { defineConfig, globalIgnores } from "eslint/config"
 import jsxA11Y from "eslint-plugin-jsx-a11y"
-import react from "eslint-plugin-react"
+import prettierPluginRecommended from "eslint-plugin-prettier/recommended"
+import reactPlugin from "eslint-plugin-react"
+import reactHooksPlugin from "eslint-plugin-react-hooks"
 import simpleImportSort from "eslint-plugin-simple-import-sort"
 import unusedImports from "eslint-plugin-unused-imports"
 import globals from "globals"
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-})
-
 export default defineConfig([
   {
+    files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
+
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -40,17 +31,9 @@ export default defineConfig([
       },
     },
 
-    extends: fixupConfigRules(
-      compat.extends(
-        "plugin:react/recommended",
-        "plugin:react-hooks/recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:prettier/recommended",
-      ),
-    ),
-
     plugins: {
-      react: fixupPluginRules(react),
+      react: reactPlugin,
+      "react-hooks": fixupPluginRules(reactHooksPlugin),
       "jsx-a11y": jsxA11Y,
       // @ts-ignore
       "@typescript-eslint": fixupPluginRules(typescriptEslint),
@@ -59,6 +42,9 @@ export default defineConfig([
     },
 
     rules: {
+      ...reactPlugin.configs.recommended.rules,
+      ...reactHooksPlugin.configs.recommended.rules,
+      ...typescriptEslint.configs.recommended.rules,
       "prettier/prettier": [
         "warn",
         {
@@ -107,5 +93,6 @@ export default defineConfig([
       },
     },
   },
-  globalIgnores(["**/node_modules"]),
+  prettierPluginRecommended,
+  globalIgnores(["**/node_modules", "dist/"]),
 ])
