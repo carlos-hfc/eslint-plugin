@@ -1,6 +1,5 @@
 import { fixupPluginRules } from "@eslint/compat"
-import typescriptEslint from "@typescript-eslint/eslint-plugin"
-import tsParser from "@typescript-eslint/parser"
+import tseslint from "typescript-eslint"
 import { defineConfig, globalIgnores } from "eslint/config"
 import jsxA11Y from "eslint-plugin-jsx-a11y"
 import prettierPluginRecommended from "eslint-plugin-prettier/recommended"
@@ -11,6 +10,8 @@ import unusedImports from "eslint-plugin-unused-imports"
 import globals from "globals"
 
 export default defineConfig([
+  prettierPluginRecommended,
+  ...tseslint.configs.recommended,  
   {
     files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
 
@@ -20,7 +21,7 @@ export default defineConfig([
         ...globals.jest,
       },
 
-      parser: tsParser,
+      parser: tseslint.parser,
       ecmaVersion: "latest",
       sourceType: "module",
 
@@ -35,8 +36,6 @@ export default defineConfig([
       react: reactPlugin,
       "react-hooks": fixupPluginRules(reactHooksPlugin),
       "jsx-a11y": jsxA11Y,
-      // @ts-ignore
-      "@typescript-eslint": fixupPluginRules(typescriptEslint),
       "simple-import-sort": simpleImportSort,
       "unused-imports": unusedImports,
     },
@@ -44,7 +43,7 @@ export default defineConfig([
     rules: {
       ...reactPlugin.configs.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
-      ...typescriptEslint.configs.recommended.rules,
+
       "prettier/prettier": [
         "warn",
         {
@@ -58,8 +57,10 @@ export default defineConfig([
       ],
 
       "react/display-name": "off",
-      "react/react-in-jsx-scope": "off",
+      "react/no-direct-mutation-state": "off",
+      "react/no-unknown-property": "error",
       "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off",
 
       "jsx-a11y/alt-text": [
         "warn",
@@ -68,31 +69,27 @@ export default defineConfig([
           img: ["Image"],
         },
       ],
-
       "jsx-a11y/aria-props": "warn",
       "jsx-a11y/aria-proptypes": "warn",
       "jsx-a11y/aria-unsupported-elements": "warn",
       "jsx-a11y/role-has-required-aria-props": "warn",
       "jsx-a11y/role-supports-aria-props": "warn",
-      "react/no-unknown-property": "error",
+
       "no-unused-vars": "off",
-      "no-explicit-any": "off",
-      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "unused-imports/no-unused-imports": "warn",
+      "@typescript-eslint/no-unused-vars": "off",
+
       "simple-import-sort/imports": "warn",
+      "simple-import-sort/exports": "warn",
+
+      "unused-imports/no-unused-imports": "warn",
     },
 
     settings: {
       react: {
         version: "detect",
       },
-
-      "import/parsers": {
-        "@typescript-eslint/parser": [".ts", ".tsx", ".d.ts"],
-      },
     },
   },
-  prettierPluginRecommended,
-  globalIgnores(["**/node_modules", "dist/"]),
+  globalIgnores(["**/node_modules", "dist", "build"]),
 ])

@@ -9,7 +9,7 @@ ESLint plugin with configurations for React and Node.js projects.
 Install dependencies:
 
 ```bash
-npm i -D eslint @carlos-hfc/eslint-plugin
+npm i -D eslint@^9 @carlos-hfc/eslint-plugin
 ```
 
 Create eslint file:
@@ -31,7 +31,7 @@ export default plugin.configs.react
 Install dependencies:
 
 ```bash
-npm i -D eslint @carlos-hfc/eslint-plugin
+npm i -D eslint@^9 @carlos-hfc/eslint-plugin
 ```
 
 Create eslint file:
@@ -47,6 +47,10 @@ import plugin from "@carlos-hfc/eslint-plugin"
 
 export default plugin.configs.node
 ```
+
+> [!NOTE]
+> This plugin currently supports ESLint 9. ESLint 10 is not yet supported because `eslint-plugin-react` doesn't declare support for it
+
 
 ## License
 
