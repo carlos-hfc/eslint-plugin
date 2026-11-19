@@ -1,9 +1,11 @@
-import nodeConfig from './node.js'
-import reactConfig from './react.js'
+import node from "./node.js"
+import react from "./react.js"
+import reactNative from "./react-native.js"
 
 export const configs = {
-  node: nodeConfig,
-  react: reactConfig,
+  node,
+  react,
+  reactNative,
 }
 
 export default {
