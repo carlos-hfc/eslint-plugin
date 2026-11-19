@@ -1,5 +1,4 @@
 import { fixupPluginRules } from "@eslint/compat"
-import tseslint from "typescript-eslint"
 import { defineConfig, globalIgnores } from "eslint/config"
 import jsxA11Y from "eslint-plugin-jsx-a11y"
 import prettierPluginRecommended from "eslint-plugin-prettier/recommended"
@@ -8,8 +7,9 @@ import reactHooksPlugin from "eslint-plugin-react-hooks"
 import simpleImportSort from "eslint-plugin-simple-import-sort"
 import unusedImports from "eslint-plugin-unused-imports"
 import globals from "globals"
+import tseslint from "typescript-eslint"
 
-export default defineConfig([
+export const reactConfig = defineConfig([
   prettierPluginRecommended,
   ...tseslint.configs.recommended,  
   {
@@ -93,3 +93,5 @@ export default defineConfig([
   },
   globalIgnores(["**/node_modules", "dist", "build"]),
 ])
+
+export default reactConfig

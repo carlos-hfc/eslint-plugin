@@ -1,10 +1,12 @@
-import { Linter } from 'eslint';
+import { Linter } from 'eslint'
 
 declare const plugin: {
   configs: {
-    node: Linter.Config[];
-    react: Linter.Config[];
-  };
-};
+    next: Linter.Config[]
+    node: Linter.Config[]
+    react: Linter.Config[]
+    reactNative: Linter.Config[]
+  }
+}
 
-export = plugin;
+export = plugin
